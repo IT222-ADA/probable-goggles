@@ -1,0 +1,34 @@
+ 239  cd documents
+  240  ls
+  241  mkdir NIBATO
+  242  ls
+  243  cd NIBATO
+  244  touch readme.md
+  245  ls
+  246  start readme.md
+  247  git init
+  248  ls -al
+  249  git config --global user.email "johnnibato13@gmail.com"
+  250  git config --global user.name "jrnibs"
+  251  git status
+  252  git commit -m "add readme file first commit"
+  253  git add .
+  254  git status
+  255  git status
+  256  git add .
+  257  git status
+  258  git commit -m "add readme file first commit"
+  259  git branch -M main
+  260  git remote add origin https://github.com/IT222-BLAISE/NIBATO.git
+  261  git push -u origin main
+  262  branch
+  263  git branch
+  264  git branch sub-main
+  265  git branch
+  266  git checkout sub-main
+  267  history
+
+  git rebase (name of branch)
+  git pull  //pull data on github
+  git push  //push the data to git hub
+  git clone (url)
