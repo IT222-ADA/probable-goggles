@@ -9,7 +9,8 @@
 
     <?php include 'navbar.php'; ?>
     <?php echo $header; ?>
-
+    <br>
+    
     <?php echo "<h1>WELCOME TO MY PAGE</h1>"; ?>
     <h3><?php echo $full_Name; ?></h3> 
     <h3><?php echo $course . " | " . $subject ; ?></h3> 
