@@ -4,6 +4,18 @@ class BankAccount {
     public $accountNumber;
     private $balance;
 
+    public function getbalance(){  
+        return $this->balance;
+
+    }
+    public function getaccountnumber(){
+        return $this->accountNumber;
+    }
+
+    public function setbalance($balance){
+        $this->balance = $balance;
+    }
+
     public function deposit($amount){
         if($amount > 0){
             $this->balance += $amount;
@@ -21,17 +33,6 @@ class BankAccount {
         return false;
     }
 
-    public function getbalance(){  
-        return $this->balance;
-
-    }
-    public function getaccountnumber(){
-        return $this->accountNumber;
-    }
-
-    public function setbalance($balance){
-        $this->balance = $balance;
-    }
 }
 
 class Customer
