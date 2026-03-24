@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 class Account{
     private $accountNumber;
     public function __construct($accountNumber)
@@ -11,11 +11,13 @@ class Account{
         return $this->accountNumber;
     }
 }
+
+
 class BankAccount {
 
-    private $balance;
+    private float $balance;
 
-    public function __construct($balance = 0)
+    public function __construct(float $balance = 0)
     {
         $this->balance = $balance;
     }
@@ -51,12 +53,55 @@ class BankAccount {
 
 }
 
+class SavingAccount extends BankAccount{
+    private $interestRate;
+
+    public function __construct($balance, $interestRate){
+        parent::__construct($balance);
+        $this->interestRate = $interestRate;
+    }
+
+    public function getInterestRate(){
+        return $this->interestRate;
+    }
+
+    public function addInterest(){
+        $interest = $this->getbalance() * ($this->interestRate / 100);
+
+        $this->transaction($interest, "deposit");
+    }
+
+    public function setInterestRate($interestRate){
+        $this->interestRate = $interestRate;
+    }
+}
+
+class CheckingAccount extends BankAccount{
+    private $minBalance;
+
+    public function __construct($balance, $minBalance)
+    {
+        parent::__construct($balance);
+        $this->minBalance = $minBalance;
+        
+    }
+
+    public function withdraw($amount){
+        if($amount > 0 && ($this->getbalance() - $this->minBalance) >= $amount){
+            $this->transaction($amount, "withdraw");
+            return true;
+        }
+        return false;
+    }
+}
+
 class Customer
 {
 	private $name;
 	private $email;
 	private $address;
 	private $contact;
+    private $accounts = [];
 
     public function __construct($name,$email,$address,$contact)
     {
@@ -64,6 +109,25 @@ class Customer
         $this->email = $email;
         $this->address = $address;
         $this->contact = $contact;
+        $this->accounts = [];
+    }
+
+    public function OpenAccount($account, $bankaccount){
+        $this->accounts[] = ['account' => $account, 'bankaccount' => $bankaccount];
+    }
+
+    public function CloseAccount($accountToClose){
+        foreach($this->accounts as $index => $accountData){
+            if($accountData['account']->getaccountnumber() == $accountToClose->getaccountnumber()){
+                unset($this->accounts[$index]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getAccounts(){
+        return $this->accounts ?? [];
     }
 
 	public function setName($name)

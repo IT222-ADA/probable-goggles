@@ -9,7 +9,43 @@
     <?php 
         include 'class.php';
 
-        $acount1 = new Account("123");
+        $account1 = new Account("123");
+        $account2 = new Account("222");
+
+        $saveAccount = new SavingAccount(100, 3);
+        $checkAccount = new CheckingAccount(200,50);
+
+        $customer1 = new Customer("JOHN","J@gmail.com","OC","123");
+        $customer2 = new Customer("CARLO","C@gmail.com","OC","222");
+
+        $customer1->OpenAccount($account1,$saveAccount);
+        $customer2->OpenAccount($account2,$checkAccount);
+
+        //display
+        echo "<br>";
+        foreach($customer1->getAccounts() as $account){
+            echo "Account Number :" . $account['account']->getaccountnumber() . "<br>" . 
+            "Balance : P " . $account['bankaccount']->getbalance() . "<br>";
+        }
+        echo "<br>";
+        foreach($customer2->getAccounts() as $account){
+            echo "Account Number :" . $account['account']->getaccountnumber() . "<br>" . 
+            "Balance : P " . $account['bankaccount']->getbalance() . "<br>";
+        }
+
+
+        $saveAccount->transaction(100, "deposit");
+        $saveAccount->addInterest();
+        $saveAccount->setInterestRate(5);
+        $saveAccount->addInterest();
+        echo "<h3>Saving Account</h3>";
+        echo $saveAccount->getbalance();
+
+
+        $checkAccount->withdraw(100);
+        $checkAccount->withdraw(50);
+        echo "<h3>Checking Account</h3>";
+        echo $checkAccount->getbalance();
 
         $account = new BankAccount(100);
         $customer = new Customer("JOHN DOE","johndoe@gamil.com","USA","555-1234");
@@ -32,6 +68,8 @@
 
         $account->transaction(200, 'deposit');
         $account->transaction(50, 'withdraw');
+
+        var_dump($account->getbalance());
 
         $customer->setName("John Doe");
         $customerName = $customer->getName();
