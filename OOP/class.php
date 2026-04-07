@@ -1,25 +1,32 @@
 <?php
 declare(strict_types=1);
+trait Logger{
+    public function log($message){
+        $logEntry = date('Y-m-d h:i:s'). ':'.'('. __CLASS__ .')' . $message .PHP_EOL;
+        file_put_contents('log.txt',$logEntry, FILE_APPEND);
+    }
+}
 class Account{
+    Use Logger;
     private $accountNumber;
     public function __construct($accountNumber)
     {
         $this->accountNumber = $accountNumber;
+        $this->log("new Account is created ". $accountNumber);
     }
 
     public function getaccountnumber(){
         return $this->accountNumber;
     }
 }
-
-
 class BankAccount {
-
+    Use Logger;
     private float $balance;
 
     public function __construct(float $balance = 0)
     {
         $this->balance = $balance;
+        $this->log("new BankAccount is created ");
     }
 
     public function getbalance(){  
@@ -158,9 +165,47 @@ class Customer
         return $this->address;
     }
 
-     public function getContact()
+    public function getContact()
     {
         return $this->contact;
+    }
+}
+
+class Bank{
+    private $customers;
+
+    public function __construct()
+    {   
+        $this->customers = [];
+    }
+
+    public function getCustomers(){
+        return $this->customers;
+    }
+
+    public function verifyCustomer($customer){
+        return in_array($customer, $this->customers);
+    }
+
+    public function addCustomer($customer){
+        $this->customers[] = $customer;
+    }
+
+    public function removeCustomer($customer){
+        $index = array_search($customer, $this->customers);
+        if($index !== false){
+            unset($this->customers[$index]);
+            return true;
+        }
+        return false;
+    }
+
+    public function processTransaction($account, $amount){
+        if($amount > 0){
+            $account->transaction($amount,'deposit');
+        }else {
+            $account->transaction(abs($amount),'withdraw');
+        }
     }
 }
 
