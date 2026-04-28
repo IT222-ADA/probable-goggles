@@ -20,8 +20,8 @@ spl_autoload_register(function ($class){
 });
 
 //load session
-// require_once __DIR__ .'/../app/Core/Session.php';
-// Session::start();
+require_once __DIR__ .'/../app/Core/Session.php';
+Session::start();
 
 //routes
 $routes = require __DIR__ .'/../app/Config/routes.php';

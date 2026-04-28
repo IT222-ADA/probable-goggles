@@ -16,7 +16,6 @@
 </head>
 <body>
     <?php require $contentView; ?>
-    
 </body>
 </html>
 
