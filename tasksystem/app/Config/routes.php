@@ -4,10 +4,10 @@ return[
     // public
     
     '/' => 'Public@index',
-    //LOGIN
+    '/login' => 'Public@login',
+    '/registration' => 'Public@registration',
 
-    '/login' => 'Auth@login',
-    '/logout' => 'Auth@logout',
     '/auth/authenticate' => 'Auth@authenticate',
+    '/auth/register' => 'Auth@register'
 
 ];

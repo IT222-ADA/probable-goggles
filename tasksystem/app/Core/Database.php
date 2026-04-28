@@ -1,36 +1,55 @@
 <?php
 
-Class Database{
+class Database
+{
+    // Singleton instance
     private static ?Database $instance = null;
 
+    // mysqli connection
     private mysqli $connection;
 
+    // Private constructor (only this class can create instance)
     private function __construct()
     {
-        $config = require __DIR__ . '/../Config/Database.php';
+        // Load DB config
+        $config = require __DIR__ . '/../Config/database.php';
 
+        // Create MySQLi connection
         $this->connection = new mysqli(
             $config['host'],
             $config['username'],
             $config['password'],
-            $config['host'],
             $config['database'],
             $config['port'] ?? 3306
         );
 
-        if($this->connection->connect_error){
-            die('Database connection failed' . $this->connection->connect_error);
-
+        // Check for connection errors
+        if ($this->connection->connect_error) {
+            die('Database connection failed: ' . $this->connection->connect_error);
         }
 
-        $this->connection->set_charset($config['charset']);
+        // Set charset
+        $this->connection->set_charset('utf8mb4');
     }
 
-    public static function getInstance(): mysqli{
-        if(self::$instance === null){
+    /**
+     * Get the single Database instance
+     * @return mysqli
+     */
+    public static function getInstance(): mysqli
+    {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance->connection;
     }
 
+    // Prevent cloning
+    private function __clone() {}
+
+    // Prevent unserializing
+    public function __wakeup()
+    {
+        throw new Exception("Cannot unserialize singleton Database");
+    }
 }

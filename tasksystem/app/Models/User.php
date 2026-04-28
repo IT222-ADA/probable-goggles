@@ -13,4 +13,13 @@ class User extends Model{
         return null;
 
     }
+
+    public function create(array $data): bool
+    {
+        if(isset($data['password'])){
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        }
+
+        return $this->insert($data);
+    }
 }
